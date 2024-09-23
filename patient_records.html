@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Patient Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .record {
+            background: #e9e9e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Saved Patient Records</h2>
+        <div id="recordsContainer"></div>
+    </div>
+
+    <script>
+        // Function to display patient data from localStorage
+        function displayRecords() {
+            const recordsContainer = document.getElementById('recordsContainer');
+            recordsContainer.innerHTML = ''; // Clear previous records
+
+            let records = JSON.parse(localStorage.getItem('patientRecords')) || [];
+
+            records.forEach((record, index) => {
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'record';
+                recordDiv.innerHTML = `
+                    <strong>Record ${index + 1}</strong><br>
+                    <strong>Name:</strong> ${record.name}<br>
+                    <strong>Age:</strong> ${record.age}<br>
+                    <strong>Gender:</strong> ${record.gender}<br>
+                    <strong>Medical History:</strong> ${record.medicalHistory}<br>
+                    <strong>Allergies:</strong> ${record.allergies}<br>
+                    <strong>Medications:</strong> ${record.medications}<br>
+                    <strong>Comments:</strong> ${record.comments}<br>
+                    <strong>Saved On:</strong> ${record.timestamp}<br>
+                `;
+                recordsContainer.appendChild(recordDiv);
+            });
+        }
+
+        // Display records on page load
+        window.onload = displayRecords;
+    </script>
+
+</body>
+</html>

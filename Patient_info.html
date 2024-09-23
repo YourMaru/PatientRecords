@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Patient Information Form</h2>
+        <form id="patientForm">
+            <label for="name">Patient Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="medical-history">Medical History:</label>
+            <textarea id="medical-history" name="medical-history" rows="4" required></textarea>
+
+            <label for="allergies">Allergies:</label>
+            <textarea id="allergies" name="allergies" rows="2" required></textarea>
+
+            <label for="medications">Current Medications:</label>
+            <textarea id="medications" name="medications" rows="2" required></textarea>
+
+            <label for="comments">Additional Comments:</label>
+            <textarea id="comments" name="comments" rows="3"></textarea>
+
+            <button type="button" onclick="saveRecord()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to save patient data to localStorage
+        function saveRecord() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const medicalHistory = document.getElementById('medical-history').value;
+            const allergies = document.getElementById('allergies').value;
+            const medications = document.getElementById('medications').value;
+            const comments = document.getElementById('comments').value;
+            const timestamp = new Date().toLocaleString();
+
+            const record = {
+                name: name,
+                age: age,
+                gender: gender,
+                medicalHistory: medicalHistory,
+                allergies: allergies,
+                medications: medications,
+                comments: comments,
+                timestamp: timestamp
+            };
+
+            let records = JSON.parse(localStorage.getItem('patientRecords')) || [];
+            records.push(record);
+            localStorage.setItem('patientRecords', JSON.stringify(records));
+
+            document.getElementById('patientForm').reset(); // Clear the form
+
+            alert("Patient record saved successfully.");
+        }
+    </script>
+
+</body>
+</html>
